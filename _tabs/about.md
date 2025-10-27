@@ -8,7 +8,7 @@ order: 4
 
 
 - 👨‍💻 I am a technology enthusiast with interest in cloud technologies and Infrastructure.
-- 📚 I’m currently learning everything about Kubernates😅
+- 📚 I’m currently learning everything about kubernetes administration😅
 - 💪🏼 Future Goals: Learn more technologies-AI Ops & ML Ops
 
 ---
