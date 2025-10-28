@@ -1,7 +1,12 @@
 ---
-# the default layout is 'page'
-icon: fas fa-info-circle
-order: 4
+title: Welcome to Phaneesh
+date: 2024-01-12
+categories:
+tags:
+author: owen
+image:
+  path: assets/img/Phaneesh/blog.jpg
+  alt: Welcome
 ---
 
 ### Hi there 👋 I'm Phaneesh!  
