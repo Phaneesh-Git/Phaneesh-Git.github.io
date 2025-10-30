@@ -5,7 +5,7 @@ categories: ['site','blog-as-code']
 tags: ['blog-as-code','jekyll','chirpy','github pages']
 author: owen
 image:
-  path: assets/headers/2024-01-13-blog-as-code.webp
+  path: assets/img/Phaneesh/blog.jpg
   alt: Blog-as-Code
 ---
 
