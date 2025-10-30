@@ -269,4 +269,4 @@ And now if you got this far, you should be able to browse to your very own "blog
 
 - `https://USERNAME.github.io`, where `USERNAME` represents our GitHub username.
 
-![O so techie site](/assets/articles/2024-01-13-osotechisite.png)
+
