@@ -4,10 +4,12 @@ title: "Testing Images in Jekyll"
 date: 2026-04-06
 categories: [test, setup]
 image:
-  path: assets/img/test-pic.jpg
+  path: /assets/img/test-pic.jpg
+  alt: "My Test Image"
 published: true
 ---
-<img src="{{ page.image.path }}" alt="{{ page.image.alt }}" style="width: 30px; height: 40px;">
+
+<img src="{{ page.image.path }}" alt="{{ page.image.alt }}" style="width: 300px; height: auto; border-radius: 8px;">
 
 # Image Testing 101
 
