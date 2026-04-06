@@ -8,7 +8,7 @@ image:
   alt: Test
 published: true
 ---
-<img src="{{ page.image.path }}" alt="{{ page.image.alt }}" style="width: 300px; height: auto;">
+<img src="{{ page.image.path }}" alt="{{ page.image.alt }}" style="width: 30px; height: 40px;">
 
 # Image Testing 101
 
