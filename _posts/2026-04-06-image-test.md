@@ -6,12 +6,10 @@ categories: [test, setup]
 image:
   path: /assets/headers/test-pic.jpg
   alt: "My Test Image"
-  width: 1200
-  height: 630
+  width: 100
+  height: 800
 published: true
 ---
-
-<img src="{{ page.image.path }}" alt="{{ page.image.alt }}" style="width: 300px; height: auto; border-radius: 8px;">
 
 # Image Testing 101
 
