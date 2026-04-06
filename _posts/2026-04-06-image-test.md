@@ -5,7 +5,6 @@ date: 2026-04-06
 categories: [test, setup]
 image:
   path: assets/img/test-pic.jpg
-  alt: Test
 published: true
 ---
 <img src="{{ page.image.path }}" alt="{{ page.image.alt }}" style="width: 30px; height: 40px;">
