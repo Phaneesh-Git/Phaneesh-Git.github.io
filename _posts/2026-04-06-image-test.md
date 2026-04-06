@@ -6,8 +6,8 @@ categories: [test, setup]
 image:
   path: /assets/headers/test-pic.jpg
   alt: "My Test Image"
-  width: 200
-  height: 800
+  width: 1200
+  height: 630
 published: true
 ---
 
