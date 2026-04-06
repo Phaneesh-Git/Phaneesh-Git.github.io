@@ -4,7 +4,7 @@ title: "Testing Images in Jekyll"
 date: 2026-04-06
 categories: [test, setup]
 image:
-  path: /assets/img/test-pic.jpg
+  path: /assets/headers/test-pic.jpg
   alt: "My Test Image"
 published: true
 ---
