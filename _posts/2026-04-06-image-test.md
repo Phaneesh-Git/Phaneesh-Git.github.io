@@ -3,6 +3,9 @@ layout: post
 title: "Testing Images in Jekyll"
 date: 2026-04-06
 categories: [test, setup]
+image:
+  path: assets/img/test-pic.jpg
+  alt: Test
 published: true
 ---
 
@@ -13,13 +16,13 @@ This post is a test to ensure the Dev Container and Jekyll can correctly render 
 ### 1. Standard Markdown Image
 This is the most common way to add an image. We use a relative path starting from the root `/`.
 
-![Test Image Description](/assets/images/test-pic.jpg)
+![Test Image Description](/assets/img/test-pic.jpg)
 
 ### 2. Image with a Caption (HTML)
 If you want to center your image or add a specific width (useful for those 200g chicken meal photos!), use HTML:
 
 <div style="text-align: center;">
-    <img src="{{ site.baseurl }}/assets/images/test-pic.jpg" alt="Centered Test" style="width: 80%; border-radius: 10px;">
+    <img src="{{ site.baseurl }}/assets/img/test-pic.jpg" alt="Centered Test" style="width: 80%; border-radius: 10px;">
     <p><em>Figure 1: A centered test image with rounded corners.</em></p>
 </div>
 
