@@ -9,6 +9,8 @@ image:
 published: true
 ---
 
+<img src="{{ page.image.path }}" alt="{{ page.image.alt }}" style="width: 300px; height: auto;">
+
 # Image Testing 101
 
 This post is a test to ensure the Dev Container and Jekyll can correctly render images from my local directory.
