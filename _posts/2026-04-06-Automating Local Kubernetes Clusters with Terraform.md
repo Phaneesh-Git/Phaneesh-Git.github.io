@@ -3,6 +3,7 @@ layout: post
 title: "Automating Local Kubernetes Clusters with Terraform, Kind, and NGINX Ingress"
 date: 2026-04-06
 categories: [Terraform, K8 setup]
+tags: [Terraform,K8,Kind]
 image:
   path: /assets/headers/test-pic.jpg
   alt: "K8 Cluster"
