@@ -1,34 +1,24 @@
 ---
 layout: post
-title: "Testing Images in Jekyll"
+title: "Automating Local Kubernetes Clusters with Terraform, Kind, and NGINX Ingress"
 date: 2026-04-06
-categories: [test, setup]
+categories: [Terraform, K8 setup]
 image:
   path: /assets/headers/test-pic.jpg
-  alt: "My Test Image"
+  alt: "K8 Cluster"
   width: 1200
   height: 630
 published: true
 ---
+> **Complete Tech Blog & Setup Guide**  
+> *Author:* Phaneesh | *Date:* April 6, 2026 | *Repository:* [Terraform for Kind with NGINX](https://github.com/Phaneesh-Git/Terraform_for_kind_with_NGINX)
 
-# Image Testing 101
+* * *
 
-This post is a test to ensure the Dev Container and Jekyll can correctly render images from my local directory.
+## Introduction
 
-### 1. Standard Markdown Image
-This is the most common way to add an image. We use a relative path starting from the root `/`.
+Setting up a local Kubernetes environment can be tedious and error-prone. You need to install Kind, configure networking, deploy an ingress controller, and manage port mappings—all manually. But what if you could automate all of this with a single Terraform command?
 
-![Test Image Description](/assets/img/test-pic.jpg)
+This repository contains a fully automated Terraform setup that provisions a complete, production-like Kubernetes environment locally using **Kind**, **Helm**, and **NGINX Ingress Controller**. Whether you're developing microservices, testing deployments, or learning Kubernetes, this automation will save you hours of manual configuration.
 
-### 2. Image with a Caption (HTML)
-If you want to center your image or add a specific width (useful for those 200g chicken meal photos!), use HTML:
-
-<div style="text-align: center;">
-    <img src="{{ site.baseurl }}/assets/img/test-pic.jpg" alt="Centered Test" style="width: 80%; border-radius: 10px;">
-    <p><em>Figure 1: A centered test image with rounded corners.</em></p>
-</div>
-
----
-
-### Why use `{{ site.baseurl }}`?
-Using the Liquid tag `{{ site.baseurl }}` ensures that if your site is hosted at `phaneesh-git.github.io/project-name/` instead of the root, the image link won't break.
+Please read full the article here-  https://phaneesh.hashnode.dev/4-automating-local-kubernetes-clusters-with-terraform-kind-and-nginx-ingress
