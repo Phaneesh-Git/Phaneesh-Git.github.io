@@ -21,4 +21,4 @@ Setting up a local Kubernetes environment can be tedious and error-prone. You ne
 
 This repository contains a fully automated Terraform setup that provisions a complete, production-like Kubernetes environment locally using **Kind**, **Helm**, and **NGINX Ingress Controller**. Whether you're developing microservices, testing deployments, or learning Kubernetes, this automation will save you hours of manual configuration.
 
-Please read full the article here-  https://phaneesh.hashnode.dev/4-automating-local-kubernetes-clusters-with-terraform-kind-and-nginx-ingress
+Please read full the article here- [Full Article]( https://phaneesh.hashnode.dev/4-automating-local-kubernetes-clusters-with-terraform-kind-and-nginx-ingress)
