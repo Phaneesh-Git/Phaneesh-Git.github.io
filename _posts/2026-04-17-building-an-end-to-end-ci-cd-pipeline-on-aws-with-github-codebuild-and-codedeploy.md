@@ -94,6 +94,32 @@ The `start_server.sh` script handles the heavy lifting on the server:
 - Stops any existing container.
 - Runs the new container on port 80.
 
+```bash
+#!/bin/bash
+set -e
+
+DOCKER_IMAGE="$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/aws_e2e_ci:latest"
+CONTAINER_NAME="aws_e2e_ci_container"
+
+# Ensure Docker is installed and running
+sudo apt install docker.io -y
+
+# Stop and remove any existing container with the same name
+if docker ps -a --format '{{.Names}}' | grep -q "$CONTAINER_NAME"; then
+  echo "Stopping and removing existing container: $CONTAINER_NAME"
+  docker stop "$CONTAINER_NAME"
+  docker rm "$CONTAINER_NAME"
+fi
+
+# Pull the latest Docker image
+echo "Pulling Docker image: $DOCKER_IMAGE"
+sudo docker pull "$DOCKER_IMAGE"
+
+# Run the new Docker container
+echo "Running new Docker container: $CONTAINER_NAME"
+sudo docker run -d -p 80:5000 --name "$CONTAINER_NAME" "$DOCKER_IMAGE"
+```
+
 ## Key Takeaways
 - **Automation is Security:** Using AWS Parameter Store prevents hardcoding credentials in your source code.
 - **Consistency is King:** Docker ensures that the environment where you build is identical to the environment where you deploy.
