@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1175 600" width="1175" height="600">
     <defs>
         <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#232F3E" />
@@ -13,39 +13,38 @@
         </filter>
     </defs>
     
-    <rect width="1200" height="630" fill="url(#bg)" />
+    <rect width="1175" height="600" fill="url(#bg)" />
 
     <g stroke="#ffffff" stroke-width="1" stroke-opacity="0.05">
-        <line x1="0" y1="100" x2="1200" y2="100" />
-        <line x1="0" y1="200" x2="1200" y2="200" />
-        <line x1="0" y1="300" x2="1200" y2="300" />
-        <line x1="0" y1="400" x2="1200" y2="400" />
-        <line x1="0" y1="500" x2="1200" y2="500" />
-        <line x1="0" y1="600" x2="1200" y2="600" />
-        <line x1="200" y1="0" x2="200" y2="630" />
-        <line x1="400" y1="0" x2="400" y2="630" />
-        <line x1="600" y1="0" x2="600" y2="630" />
-        <line x1="800" y1="0" x2="800" y2="630" />
-        <line x1="1000" y1="0" x2="1000" y2="630" />
+        <line x1="0" y1="100" x2="1175" y2="100" />
+        <line x1="0" y1="200" x2="1175" y2="200" />
+        <line x1="0" y1="300" x2="1175" y2="300" />
+        <line x1="0" y1="400" x2="1175" y2="400" />
+        <line x1="0" y1="500" x2="1175" y2="500" />
+        <line x1="200" y1="0" x2="200" y2="600" />
+        <line x1="400" y1="0" x2="400" y2="600" />
+        <line x1="600" y1="0" x2="600" y2="600" />
+        <line x1="800" y1="0" x2="800" y2="600" />
+        <line x1="1000" y1="0" x2="1000" y2="600" />
     </g>
 
-    <g fill="#FF9900" opacity="0.8" transform="translate(0, 15)">
+    <g fill="#FF9900" opacity="0.8" transform="translate(-25, 0)">
         <path d="M 900 120 Q 920 80 960 90 Q 990 70 1020 110 Q 1060 110 1050 150 Q 1070 190 1030 200 Q 1000 230 960 210 Q 920 230 890 200 Q 860 190 870 150 Q 860 110 900 120 Z" />
     </g>
-    <g fill="#3b82f6" opacity="0.5" transform="translate(-750, 65) scale(0.8)">
+    <g fill="#3b82f6" opacity="0.5" transform="translate(-775, 50) scale(0.8)">
         <path d="M 900 120 Q 920 80 960 90 Q 990 70 1020 110 Q 1060 110 1050 150 Q 1070 190 1030 200 Q 1000 230 960 210 Q 920 230 890 200 Q 860 190 870 150 Q 860 110 900 120 Z" />
     </g>
 
-    <text x="600" y="200" fill="#ffffff" font-family="sans-serif" font-size="48" font-weight="bold" text-anchor="middle" letter-spacing="2">BUILDING AN END-TO-END</text>
-    <text x="600" y="270" fill="#FF9900" font-family="sans-serif" font-size="56" font-weight="900" text-anchor="middle" letter-spacing="1">CI/CD PIPELINE ON AWS</text>
+    <text x="587.5" y="180" fill="#ffffff" font-family="sans-serif" font-size="48" font-weight="bold" text-anchor="middle" letter-spacing="2">BUILDING AN END-TO-END</text>
+    <text x="587.5" y="250" fill="#FF9900" font-family="sans-serif" font-size="56" font-weight="900" text-anchor="middle" letter-spacing="1">CI/CD PIPELINE ON AWS</text>
 
-    <g transform="translate(150, 400)">
+    <g transform="translate(137.5, 380)">
         
         <rect x="0" y="0" width="200" height="100" rx="15" fill="#24292e" stroke="#ffffff" stroke-width="1" filter="url(#shadow)"/>
         <text x="100" y="45" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Source</text>
         <text x="100" y="70" fill="#8b949e" font-family="sans-serif" font-size="16" text-anchor="middle">GitHub</text>
 
-        <!-- Big Blue Arrow: Source to Build -->
+        <!-- Big Blue Arrow -->
         <g transform="translate(220, 35)" filter="url(#glow1)">
             <path d="M 0 10 L 70 10 L 70 -5 L 110 15 L 70 35 L 70 20 L 0 20 Z" fill="#3b82f6" opacity="0.9" />
         </g>
@@ -54,7 +53,7 @@
         <text x="450" y="45" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Build</text>
         <text x="450" y="70" fill="#60a5fa" font-family="sans-serif" font-size="16" text-anchor="middle">AWS CodeBuild</text>
 
-        <!-- Big Green Arrow: Build to Deploy -->
+        <!-- Big Green Arrow -->
         <g transform="translate(570, 35)" filter="url(#glow1)">
             <path d="M 0 10 L 70 10 L 70 -5 L 110 15 L 70 35 L 70 20 L 0 20 Z" fill="#10b981" opacity="0.9" />
         </g>
@@ -63,5 +62,4 @@
         <text x="800" y="45" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Deploy</text>
         <text x="800" y="70" fill="#34d399" font-family="sans-serif" font-size="16" text-anchor="middle">AWS CodeDeploy</text>
     </g>
-
 </svg>
