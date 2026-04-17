@@ -8,7 +8,8 @@ image:
   path: /assets/headers/AWS_CI_CD.jpg
   alt: "AWS CI/CD Pipeline"
   width: 1200
-  height: 630
+  height: 628
+  Position: Center
 published: true
 ---
 > **Complete Tech Blog & Setup Guide**  
