@@ -5,14 +5,14 @@ date: 2026-04-17
 categories: [DevOps]
 tags: [AWS, CI/CD, Docker, GitHub, CodeBuild, CodeDeploy]
 image:
-  path: /assets/headers/aws-cicd-pipeline.jpg
+  path: /assets/headers/AWS_CI_CD.jpg
   alt: "AWS CI/CD Pipeline"
   width: 2400
   height: 1260
 published: true
 ---
 > **Complete Tech Blog & Setup Guide**  
-> *Author:* Phaneesh | *Date:* April 17, 2026 | *Repository:* [AWS_End_to_End_CI]<https://github.com/Phaneesh-Git/AWS_End_to_End_CI>
+> *Author:* Phaneesh | *Date:* April 17, 2026 | *Repository:* [AWS_End_to_End_CI](https://github.com/Phaneesh-Git/AWS_End_to_End_CI)
 
 * * *
 
