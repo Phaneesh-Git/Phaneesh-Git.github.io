@@ -7,8 +7,8 @@ tags: [AWS, CI/CD, Docker, GitHub, CodeBuild, CodeDeploy]
 image:
   path: /assets/headers/aws-cicd-pipeline.jpg
   alt: "AWS CI/CD Pipeline"
-  width: 1175
-  height: 600
+  width: 1280
+  height: 670
 published: true
 ---
 > **Complete Tech Blog & Setup Guide**  
