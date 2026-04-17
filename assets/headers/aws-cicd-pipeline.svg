@@ -1,27 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" width="1100" height="600">
     <defs>
         <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#232F3E" />
             <stop offset="100%" stop-color="#0D1117" />
         </linearGradient>
-        <linearGradient id="pipe" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#FF9900" />
-            <stop offset="50%" stop-color="#3b82f6" />
-            <stop offset="100%" stop-color="#10b981" />
-        </linearGradient>
         <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
           <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity="0.5"/>
         </filter>
+        <filter id="glow1" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
     </defs>
     
-    <rect width="1200" height="600" fill="url(#bg)" />
+    <rect width="1100" height="600" fill="url(#bg)" />
 
     <g stroke="#ffffff" stroke-width="1" stroke-opacity="0.05">
-        <line x1="0" y1="100" x2="1200" y2="100" />
-        <line x1="0" y1="200" x2="1200" y2="200" />
-        <line x1="0" y1="300" x2="1200" y2="300" />
-        <line x1="0" y1="400" x2="1200" y2="400" />
-        <line x1="0" y1="500" x2="1200" y2="500" />
+        <line x1="0" y1="100" x2="1100" y2="100" />
+        <line x1="0" y1="200" x2="1100" y2="200" />
+        <line x1="0" y1="300" x2="1100" y2="300" />
+        <line x1="0" y1="400" x2="1100" y2="400" />
+        <line x1="0" y1="500" x2="1100" y2="500" />
         <line x1="200" y1="0" x2="200" y2="600" />
         <line x1="400" y1="0" x2="400" y2="600" />
         <line x1="600" y1="0" x2="600" y2="600" />
@@ -29,31 +28,39 @@
         <line x1="1000" y1="0" x2="1000" y2="600" />
     </g>
 
-    <g transform="translate(150, 380)">
-        <path d="M 200 50 L 700 50" stroke="url(#pipe)" stroke-width="6" stroke-dasharray="10 5" fill="none" />
-        <polygon points="450,42 465,50 450,58" fill="#3b82f6" />
-        <polygon points="700,42 715,50 700,58" fill="#10b981" />
+    <g fill="#FF9900" opacity="0.8" transform="translate(-50, 0)">
+        <path d="M 900 120 Q 920 80 960 90 Q 990 70 1020 110 Q 1060 110 1050 150 Q 1070 190 1030 200 Q 1000 230 960 210 Q 920 230 890 200 Q 860 190 870 150 Q 860 110 900 120 Z" />
+    </g>
+    <g fill="#3b82f6" opacity="0.5" transform="translate(-800, 50) scale(0.8)">
+        <path d="M 900 120 Q 920 80 960 90 Q 990 70 1020 110 Q 1060 110 1050 150 Q 1070 190 1030 200 Q 1000 230 960 210 Q 920 230 890 200 Q 860 190 870 150 Q 860 110 900 120 Z" />
+    </g>
 
+    <text x="550" y="180" fill="#ffffff" font-family="sans-serif" font-size="48" font-weight="bold" text-anchor="middle" letter-spacing="2">BUILDING AN END-TO-END</text>
+    <text x="550" y="250" fill="#FF9900" font-family="sans-serif" font-size="56" font-weight="900" text-anchor="middle" letter-spacing="1">CI/CD PIPELINE ON AWS</text>
+
+    <g transform="translate(100, 380)">
+        
         <rect x="0" y="0" width="200" height="100" rx="15" fill="#24292e" stroke="#ffffff" stroke-width="1" filter="url(#shadow)"/>
         <text x="100" y="45" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Source</text>
         <text x="100" y="70" fill="#8b949e" font-family="sans-serif" font-size="16" text-anchor="middle">GitHub</text>
 
+        <!-- Big Blue Arrow: Source to Build -->
+        <g transform="translate(220, 35)" filter="url(#glow1)">
+            <path d="M 0 10 L 70 10 L 70 -5 L 110 15 L 70 35 L 70 20 L 0 20 Z" fill="#3b82f6" opacity="0.9" />
+        </g>
+
         <rect x="350" y="0" width="200" height="100" rx="15" fill="#005276" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
         <text x="450" y="45" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Build</text>
         <text x="450" y="70" fill="#60a5fa" font-family="sans-serif" font-size="16" text-anchor="middle">AWS CodeBuild</text>
+
+        <!-- Big Green Arrow: Build to Deploy -->
+        <g transform="translate(570, 35)" filter="url(#glow1)">
+            <path d="M 0 10 L 70 10 L 70 -5 L 110 15 L 70 35 L 70 20 L 0 20 Z" fill="#10b981" opacity="0.9" />
+        </g>
 
         <rect x="700" y="0" width="200" height="100" rx="15" fill="#064e3b" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
         <text x="800" y="45" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Deploy</text>
         <text x="800" y="70" fill="#34d399" font-family="sans-serif" font-size="16" text-anchor="middle">AWS CodeDeploy</text>
     </g>
 
-    <g fill="#FF9900" opacity="0.8">
-        <path d="M 900 120 Q 920 80 960 90 Q 990 70 1020 110 Q 1060 110 1050 150 Q 1070 190 1030 200 Q 1000 230 960 210 Q 920 230 890 200 Q 860 190 870 150 Q 860 110 900 120 Z" />
-    </g>
-    <g fill="#3b82f6" opacity="0.5" transform="translate(-750, 50) scale(0.8)">
-        <path d="M 900 120 Q 920 80 960 90 Q 990 70 1020 110 Q 1060 110 1050 150 Q 1070 190 1030 200 Q 1000 230 960 210 Q 920 230 890 200 Q 860 190 870 150 Q 860 110 900 120 Z" />
-    </g>
-
-    <text x="600" y="180" fill="#ffffff" font-family="sans-serif" font-size="48" font-weight="bold" text-anchor="middle" letter-spacing="2">BUILDING AN END-TO-END</text>
-    <text x="600" y="250" fill="#FF9900" font-family="sans-serif" font-size="56" font-weight="900" text-anchor="middle" letter-spacing="1">CI/CD PIPELINE ON AWS</text>
 </svg>
