@@ -5,7 +5,7 @@ date: 2026-04-17
 categories: [DevOps]
 tags: [AWS, CI/CD, Docker, GitHub, CodeBuild, CodeDeploy]
 image:
-  path: /assets/headers/default.jpg
+  path: /assets/headers/aws-cicd-pipeline.jpg
   alt: "AWS CI/CD Pipeline"
   width: 1200
   height: 630
