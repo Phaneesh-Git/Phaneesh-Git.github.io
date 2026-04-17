@@ -12,7 +12,7 @@ image:
 published: true
 ---
 > **Complete Tech Blog & Setup Guide**  
-> *Author:* Phaneesh | *Date:* April 17, 2026 | *Repository:* https://github.com/Phaneesh-Git/AWS_End_to_End_CI
+> *Author:* Phaneesh | *Date:* April 17, 2026 | *Repository:* [AWS_End_to_End_CI]<https://github.com/Phaneesh-Git/AWS_End_to_End_CI>
 
 * * *
 
