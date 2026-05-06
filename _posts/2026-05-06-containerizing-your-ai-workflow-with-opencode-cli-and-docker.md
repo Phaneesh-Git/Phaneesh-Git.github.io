@@ -2,8 +2,8 @@
 layout: post
 title: "Containerizing Your AI Workflow with OpenCode CLI and Docker"
 date: 2026-05-06
-categories: [Docker, AI]
-tags: [Docker, OpenCode, AI, DevOps]
+categories: [AI]
+tags: [OpenCode, Docker, AI, CLI]
 image:
   path: /assets/headers/2026-05-06.jpg
   alt: "OpenCode CLI Docker Setup"
@@ -12,26 +12,27 @@ image:
 published: true
 ---
 > **Complete Tech Blog & Setup Guide**  
-> *Author:* Phaneesh | *Date:* May 6, 2026 | *Repository:* AI_terminal_OpenCode (https://github.com/Phaneesh-Git/AI_terminal_OpenCode)
+> *Author:* Phaneesh | *Date:* May 6, 2026 | *Repository:* AI_terminal_OpenCode (https://github.com/aimvector/AI_terminal_OpenCode)
 
 * * *
 
 ## Introduction
 
-In the rapidly evolving landscape of Artificial Intelligence, having a consistent and portable development environment is crucial. The **OpenCode CLI** is a powerful tool for interacting with various AI models, and by containerizing it with **Docker**, we can ensure that our setup is reproducible across any machine.
+In the rapidly evolving landscape of AI-assisted development, having a consistent and portable environment is crucial. The **OpenCode CLI** is a powerful tool that brings AI capabilities directly to your terminal. However, managing dependencies like Node.js and ensuring the CLI behaves the same way across different machines can be a challenge.
 
-In this guide, we will walk through the Dockerization of the OpenCode CLI, exploring the Dockerfile configuration and setting up a convenient workflow for daily use.
+In this guide, we will walk through how to containerize the OpenCode CLI using Docker. This setup ensures that your AI terminal is always ready to go, regardless of the host operating system, and it even allows the containerized AI to interact with your host's Docker engine.
 
 ## The Dockerfile: Building the Foundation
 
-The core of our containerized setup is the `Dockerfile`. It leverages Ubuntu as the base image and sets up the necessary dependencies, including Node.js (via NVM) and the OpenCode CLI itself.
+To create our environment, we use a custom Dockerfile based on Ubuntu. The goal is to install Node.js via NVM and then the OpenCode CLI itself.
 
 ### Key Components:
 
-1.  **Base Image**: We start with `ubuntu:latest` for a clean, flexible environment.
-2.  **NVM & Node.js**: We install Node Version Manager (NVM) to manage Node.js version 24, which is required by the OpenCode CLI.
-3.  **OpenCode CLI Installation**: The CLI is installed directly via a curl-to-bash script.
-4.  **Environment Configuration**: We ensure that NVM and OpenCode binaries are correctly added to the system `PATH`.
+1.  **NVM (Node Version Manager)**: We use NVM to install Node.js 24, ensuring we have the exact version required by OpenCode.
+2.  **OpenCode CLI Installation**: A simple curl command fetches and installs the latest binary.
+3.  **Environment Persistence**: We configure `.bashrc` and a custom `BASH_ENV` to ensure the environment is correctly loaded in every session.
+
+### The Dockerfile
 
 ```dockerfile
 FROM ubuntu:latest
@@ -42,12 +43,15 @@ RUN apt-get update && apt-get install -y curl bash ca-certificates \
 ENV NVM_DIR=/root/.nvm
 ENV BASH_ENV=/root/.bash_env
 
-# Install NVM
+# Install NVM and write initialization into BASH_ENV
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
 
-# Install Node 24
+# Install Node 24 using NVM
 RUN bash -c "nvm install 24"
+
+# Make NVM available in interactive shells
+RUN echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /root/.bashrc
 
 # Install OpenCode CLI
 RUN curl -fsSL https://opencode.ai/install | bash
@@ -56,13 +60,11 @@ ENV PATH="/root/.opencode/bin:${PATH}"
 ENTRYPOINT ["/bin/bash"]
 ```
 
-## Running OpenCode CLI with Ease
+## Seamless Execution with Aliases
 
-To make the containerized CLI feel like a native tool, we can set up a shell alias. This alias handles complex Docker flags, such as mounting the Docker socket (to allow OpenCode to manage other containers) and persistent volume mounts for configuration and sessions.
+Running a Docker container with all the necessary mounts can result in a very long command. To make this "feel" like a local installation, we use a shell alias.
 
-### The `opencode` Alias
-
-Add this to your `~.bashrc`:
+### The Magic Alias
 
 ```bash
 alias opencode='docker run -it --rm \
@@ -72,17 +74,23 @@ alias opencode='docker run -it --rm \
   -w /work \
   --net host \
   -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /home/ubuntu/AI_LAB/AI_terminal_OpenCode:/root/work/AI_LAB/AI_terminal_OpenCode \
   opencode:usethis'
 ```
 
-### Why these flags?
+### Why This Works:
 
-*   **`--net host`**: Allows the container to use the host's network directly.
-*   **`-v /var/run/docker.sock:/var/run/docker.sock`**: Enables the OpenCode CLI to interact with the host's Docker daemon.
-*   **Persistent Mounts**: Ensures that your `/model` selections, `/connect` credentials, and `/sessions` history are preserved across container restarts.
+*   **Persistence**: Mounting `~/.opencode` ensures your login sessions and preferences survive container restarts.
+*   **Docker-in-Docker**: Mounting `/var/run/docker.sock` allows the OpenCode CLI inside the container to manage Docker containers on your host machine.
+*   **Context Awareness**: Mounting `$PWD` to `/work` allows the AI to see and interact with the files in your current directory.
 
 ## Conclusion
 
-Containerizing the OpenCode CLI simplifies the setup process and provides a clean, isolated environment for your AI development. Whether you're switching between different models or managing multiple AI projects, this Docker-based approach ensures consistency and reliability.
+By containerizing the OpenCode CLI, you eliminate "it works on my machine" issues and gain a powerful, isolated environment for your AI-driven workflows. Whether you're connecting to Gemini, GPT-4, or using local models, this setup provides the stability and flexibility needed for modern development.
 
-Start exploring the power of AI from your terminal with OpenCode CLI and Docker today!
+### Key Takeaways:
+- Docker provides a clean, reproducible environment for AI tools.
+- NVM allows for precise control over the Node.js runtime.
+- Host socket mounting enables powerful cross-boundary tool interaction.
+
+Happy coding with your new AI-powered terminal!
