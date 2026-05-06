@@ -12,7 +12,7 @@ image:
 published: true
 ---
 > **Complete Tech Blog & Setup Guide**  
-> *Author:* Phaneesh | *Date:* May 6, 2026 | *Repository:* AI_terminal_OpenCode (https://github.com/aimvector/AI_terminal_OpenCode)
+> *Author:* Phaneesh | *Date:* May 6, 2026 | *Repository:* [AI_terminal_OpenCode](https://github.com/Phaneesh-Git/AI_terminal_OpenCode)
 
 * * *
 
