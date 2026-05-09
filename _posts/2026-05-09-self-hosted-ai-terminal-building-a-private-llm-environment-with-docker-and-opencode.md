@@ -22,33 +22,6 @@ As developers increasingly rely on Large Language Models (LLMs) to enhance their
 By containerizing these tools, we can spin up a dedicated, privacy-first AI assistant directly on our local machines without complex dependency management.
 
 ## Project Purpose & Architecture
-The repository `/git` defines a streamlined Docker Compose environment that orchestrates two primary services. Here is the high-level architecture flow:
-
-```mermaid
-graph TD
-    subgraph Host Machine
-        User([User / Developer])
-        
-        subgraph Docker Compose
-            OT[opencode-terminal Container]
-            GL[gemma-llama Container]
-        end
-        
-        Volumes[(Local File System)]
-        Socket{{/var/run/docker.sock}}
-    end
-
-    User -->|Executes Commands| OT
-    OT -->|OpenAI API Requests via HTTP| GL
-    GL -->|Loads GGUF Model| Volumes
-    OT -->|Reads/Writes Code| Volumes
-    OT -->|Manages Host Docker| Socket
-    
-    style OT fill:#0db7ed,stroke:#fff,stroke-width:2px,color:#fff
-    style GL fill:#f39c12,stroke:#fff,stroke-width:2px,color:#fff
-    style Volumes fill:#2ecc71,stroke:#fff,stroke-width:2px,color:#fff
-```
-
 1. **`gemma-llama`**: An inference server that runs the highly efficient Gemma-4-E4B model via `llama.cpp`. 
 2. **`opencode-terminal`**: A custom terminal environment that integrates seamlessly with the AI server, providing a workspace with all necessary system mounts to act as an intelligent developer assistant.
 
