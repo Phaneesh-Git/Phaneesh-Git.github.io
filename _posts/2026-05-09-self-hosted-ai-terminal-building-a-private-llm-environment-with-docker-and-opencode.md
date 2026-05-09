@@ -103,6 +103,36 @@ The magic happens in the `opencode-terminal` container, which serves as your dai
 
 By mounting `/var/run/docker.sock`, the AI inside the terminal can execute Docker commands, introspect other containers, and perform DevOps tasks natively. The `depends_on` block with a `service_healthy` condition guarantees that the terminal only becomes available after the `llama.cpp` server has successfully loaded the massive model file into memory.
 
+### Configuring OpenCode
+You can interact with your locally hosted model using [OpenCode](https://opencode.ai/docs/providers/#llamacpp).  
+OpenCode connects to the `llama-server` endpoint over its OpenAI-compatible API.
+
+To set this up, configure your `~/.opencode/opencode.json` as follows:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "llama.cpp": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "llama-server (local)",
+      "options": {
+        "baseURL": "http://localhost:8080/v1"
+      },
+      "models": {
+        "gemma-4-E4B-it-Q4_K_M.gguf": {
+          "name": "gemma-4-E4B-it-Q4_K_M (local)",
+          "limit": {
+            "context": 65536,
+            "output": 16384
+          }
+        }
+      }
+    }
+  }
+}
+```
+
 ## Key Takeaways
 1. **True Privacy**: By keeping inference localized via `llama.cpp` and GGUF models, no data leaves your workstation.
 2. **Reproducibility**: Docker Compose makes this setup "plug-and-play" across any Linux environment.
