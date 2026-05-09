@@ -1,43 +1,35 @@
 ---
 layout: post
-title: "Self-Hosted AI Terminal: Building a Private LLM Environment with Docker and OpenCode"
+title: "Building a Private AI Terminal with Docker, llama.cpp, and OpenCode"
 date: 2026-05-09
-categories: [AI, Docker]
-tags: [Gemma, llama.cpp, Self-Hosted, OpenCode, DevOps]
+categories: [AI, DevOps]
+tags: [Docker, llama.cpp, Local-AI, Gemma]
 image:
   path: /assets/headers/2026-05-09.jpg
-  alt: "Local AI Terminal Setup"
+  alt: "Local AI Terminal setup banner"
   width: 1200
   height: 630
 published: true
 ---
 > **Complete Tech Blog & Setup Guide**  
-> *Author:* Phaneesh | *Date:* May 9, 2026 | *Repository:* [Local AI OpenCode](https://github.com/Phaneesh-Git/Local_Ai_ON_OPENCODE)
+> *Author:* Phaneesh | *Date:* May 9, 2026 | *Repository:* [Local_Ai_ON_OPENCODE](https://github.com/Phaneesh-Git/Local_Ai_ON_OPENCODE)
 
 * * *
 
 ## Introduction
-In the era of privacy-conscious computing, running Large Language Models (LLMs) locally has become a priority for developers and engineers. While cloud-based APIs are convenient, they often come with privacy trade-offs and recurring costs. This guide explores a robust, containerized approach to hosting your own AI terminal using `llama.cpp` and a custom terminal environment called OpenCode.
+As developers increasingly rely on Large Language Models (LLMs) to enhance their workflows, privacy and offline availability have become critical concerns. Sending proprietary code or system architectures to cloud APIs isn't always viable. This post explores an elegant solution found in our local repository: building a completely self-hosted AI terminal using `Docker Compose`, `llama.cpp`, and `OpenCode`. 
 
-## The Architecture
-The setup relies on Docker Compose to orchestrate two primary services:
-1.  **gemma-llama**: A high-performance inference server running the Gemma-2 (4B) model via `llama.cpp`. It provides an OpenAI-compatible API.
-2.  **opencode-terminal**: A specialized container designed for interacting with the AI, pre-configured with necessary tools and persistent volume mounts for seamless development.
+By containerizing these tools, we can spin up a dedicated, privacy-first AI assistant directly on our local machines without complex dependency management.
 
-### Service Breakdown
+## Project Purpose & Architecture
+The repository `/git` defines a streamlined Docker Compose environment that orchestrates two primary services:
+1. **`gemma-llama`**: An inference server that runs the highly efficient Gemma-4-E4B model via `llama.cpp`. 
+2. **`opencode-terminal`**: A custom terminal environment that integrates seamlessly with the AI server, providing a workspace with all necessary system mounts to act as an intelligent developer assistant.
 
-#### The AI Engine: llama.cpp
-The `gemma-llama` service uses the `ghcr.io/ggml-org/llama.cpp:full` image. It is configured to:
-- Serve the model on port 8080.
-- Use the `gemma-4-E4B-it-Q4_K_M.gguf` model file.
-- Disable reasoning overhead (`--reasoning off`) for faster response times in a terminal context.
-- Implement a robust healthcheck that ensures the API is ready before the terminal starts.
+This architecture completely isolates the AI inference engine from the local machine's host OS while allowing the terminal container controlled access via persistent volume mounts and the Docker socket.
 
-#### The Interface: OpenCode Terminal
-The `opencode-terminal` provides the interactive layer. By mounting the Docker socket and local configuration directories, it allows the AI to assist in real-time system operations while maintaining state across sessions.
-
-## Configuration Highlights
-The `docker-compose.yaml` file demonstrates best practices for local AI deployments:
+## Code Deep Dive: The Orchestration
+Let's look at how the orchestration is configured. The `docker-compose.yaml` file defines the `gemma-llama` service with optimizations specifically for local environments:
 
 ```yaml
 services:
@@ -49,23 +41,45 @@ services:
       -m /models/gemma-4-E4B-it-Q4_K_M.gguf
       --port 8080
       --host 0.0.0.0
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/models"]
-      interval: 5s
-      timeout: 3s
-      retries: 20
+      --reasoning off
+      -ngl 0
+      --jinja
+      -c 16384
+      --parallel 1
+    ports:
+      - "8080:8080"
+    volumes:
+      - ~/gemma_models:/models
 ```
 
-This healthcheck is crucial as LLMs can take several seconds (or minutes) to load into memory. By using `depends_on` with `service_healthy`, the terminal container only starts when the AI is ready to respond.
+**Key configurations:**
+- **`--server`**: Exposes the model over an OpenAI-compatible HTTP API.
+- **`-m /models/...`**: Uses a quantized (Q4_K_M) version of the Gemma-4B model. Quantization is crucial here as it drastically reduces the RAM required while maintaining high output quality.
+- **`-c 16384`**: Allocates a large context window (16K tokens), enabling the AI to read extensive code files and logs.
+- **`volumes`**: Mounts a local directory `~/gemma_models` so you don't have to re-download gigabytes of model data every time the container spins up.
 
-## Workflow: How to Use It
-1.  **Initialization**: Run `docker compose up` to start the backend.
-2.  **Interactive Session**: Use `docker compose run --rm opencode-terminal` to enter the AI-powered environment.
-3.  **Persistence**: Your configurations and models are stored in `$HOME/.opencode` and `~/gemma_models`, ensuring your setup is durable.
+## The OpenCode Terminal Integration
+The magic happens in the `opencode-terminal` container, which serves as your daily driver interface. It links to the `gemma-llama` service and mounts your local workspace:
+
+```yaml
+  opencode-terminal:
+    image: opencode:usethis
+    container_name: opencode-terminal
+    working_dir: /work    
+    volumes:
+      - $HOME/.opencode:/root/.config/opencode    
+      - $PWD:/work
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      gemma-llama:
+        condition: service_healthy
+```
+
+By mounting `/var/run/docker.sock`, the AI inside the terminal can execute Docker commands, introspect other containers, and perform DevOps tasks natively. The `depends_on` block with a `service_healthy` condition guarantees that the terminal only becomes available after the `llama.cpp` server has successfully loaded the massive model file into memory.
 
 ## Key Takeaways
-- **Privacy First**: All data remains on your local machine.
-- **Portability**: Docker ensures the setup works across different Linux environments with minimal friction.
-- **Efficiency**: llama.cpp's GGUF support allows running capable models even on hardware without high-end GPUs.
+1. **True Privacy**: By keeping inference localized via `llama.cpp` and GGUF models, no data leaves your workstation.
+2. **Reproducibility**: Docker Compose makes this setup "plug-and-play" across any Linux environment.
+3. **Seamless Workflow**: Tying the AI directly into a terminal environment bridges the gap between text generation and actionable execution.
 
-By bridging the gap between raw LLM inference and a functional terminal interface, this project provides a powerful foundation for a truly private developer assistant.
+This repository is a masterclass in combining modern containerization with lightweight LLM inference. To get started, all you need is `docker compose up` followed by your terminal access command. Happy local coding!
