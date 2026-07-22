@@ -1,0 +1,48 @@
+name: Sync to Target Repo Site Folder
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Git Identity
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "action@github.com"
+
+      - name: Clone Target Repo and Update Site Folder
+        env:
+          TARGET_PAT: ${{ secrets.TARGET_REPO_PAT }}
+          TARGET_USER: 'Phaneesh-Git'
+          TARGET_REPO: 'Phaneesh_website_on_kind_kustomize'
+        run: |
+          # 1. Clone the target repository using the PAT
+          git clone https://${{ env.TARGET_PAT }}@github.com/${{ env.TARGET_USER }}/${{ env.TARGET_REPO }}.git target_repo_dir
+          
+          # 2. Enter target repo and ensure the 'site' folder exists
+          cd target_repo_dir
+          mkdir -p site
+          cd ..
+          
+          # 3. Use rsync to copy source files into target's 'site' folder
+          # This preserves extra contents already in 'site/' and excludes '.github'
+          rsync -av --exclude='.github' --exclude='.git' ./ target_repo_dir/site/
+          
+          # 4. Return to target repo, stage, commit, and push changes
+          cd target_repo_dir
+          
+          # Check if there are changes to push
+          if [[ -n $(git status --porcelain) ]]; then
+            git add site/
+            git commit -m "Update site folder contents from source repo [skip ci]"
+            git push origin main
+          else
+            echo "No changes to sync."
+          fi
