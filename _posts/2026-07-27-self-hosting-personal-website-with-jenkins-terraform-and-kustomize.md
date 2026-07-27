@@ -50,7 +50,7 @@ The local cluster's architecture mimics a professional enterprise environment. T
                                  │
                                  ├─► [ Ingress-NGINX ] (Routes layer 7 HTTP traffic)
                                  │
-                                 ├─► [ Cert-Manager ] (Requests TLS via Cloudflare DNS01)
+                                 ├─► [ Cert-Manager ] (Requests TLS via Cloudflare DNS-01)
                                  │
                                  └─► [ Cloudflared ] (Establishes secure tunnel to Edge)
 ```
@@ -59,6 +59,65 @@ The local cluster's architecture mimics a professional enterprise environment. T
 2. **Platform Bootstrapping:** A single `kustomization.yaml` deploys the core infrastructure controllers. MetalLB sets up Layer-2 address pools so Services of type `LoadBalancer` get real, routable IPs within Docker's bridge network. Ingress-NGINX sits on top of this, exposing standard ports.
 3. **Automated Secret Configuration:** Jenkins acts as the orchestrator. It retrieves Zero-Trust API credentials from its credential store and safely applies them as Kubernetes secrets in the target namespaces. This keeps raw tokens out of git repositories.
 4. **Edge Tunneling & DNS-01 Validation:** Instead of opening up firewall ports, an in-cluster Cloudflare Tunnel daemon (`cloudflared`) connects outbound to the Cloudflare Edge. This exposes our local ingress controller safely. Cert-manager uses Cloudflare DNS API tokens to solve ACME challenges, issuing real, trusted Let's Encrypt SSL certificates to the local cluster.
+
+* * *
+
+## Deep Dive: How the Traffic Components Integrate
+
+To truly understand how this system operates, we must examine how the underlying network, routing, security, and edge tunneling components link up to route traffic from a public web browser directly down to our workstation.
+
+### 1. The Network Foundation: MetalLB
+In public cloud environments (such as AWS or GCP), requesting a Kubernetes Service of `type: LoadBalancer` automatically instructs the cloud provider to provision a physical, external load balancer (such as an ALB). However, locally inside a virtual environment like KinD, Kubernetes does not have a default load balancer controller. Without one, Services of type `LoadBalancer` remain stuck in a `<pending>` state indefinitely.
+
+**MetalLB** resolves this issue. Operatng inside our local cluster in Layer-2 mode, it reads a configured IP address pool (defined in `k8s/config/metallb-config.yaml` as `172.18.255.200 - 172.18.255.250`) within the subnet of the KinD Docker bridge network. 
+
+When the Ingress Controller requests a LoadBalancer Service, MetalLB assigns it a dedicated IP from this pool (e.g., `172.18.255.200`) and advertises this mapping via ARP (Address Resolution Protocol). This makes the Ingress controller instantly reachable inside our local environment.
+
+### 2. The L7 Traffic Cop: Ingress-NGINX
+Once MetalLB establishes a routable IP for our Ingress Controller, **Ingress-NGINX** acts as the reverse proxy for the cluster. It monitors the Kubernetes API server for `Ingress` resource declarations.
+
+Our ingress manifest (`k8s/app/ingress.yaml`) dictates the layer-7 routing logic:
+- If a request is received on port `80`/`443` where the HTTP `Host` header equals `k8.phaneesh.dev`, route it to the backend `website` Service on port `80`.
+- NGINX reads this declaratively and dynamically recompiles its configuration file without requiring restarts or dropping active connections, providing zero-downtime updates.
+
+### 3. DNS-01 Let's Encrypt Verification: Cert-Manager
+Usually, securing a website with SSL from Let's Encrypt requires answering an `HTTP-01` challenge, which demands that Let's Encrypt servers reach your web server on port `80`. Because our local cluster resides behind a home router/NAT, Let's Encrypt cannot connect directly.
+
+We solve this using **DNS-01 ACME challenges** with Cloudflare DNS:
+1. **Request:** `cert-manager` requests a certificate for `k8.phaneesh.dev`.
+2. **Challenge:** Let's Encrypt responds: *"Prove you own this domain by adding a temporary TXT record named `_acme-challenge.k8.phaneesh.dev` with this random verification token."*
+3. **Execution:** Cert-Manager utilizes the Cloudflare API token (which Jenkins safely injected as a secret) to connect directly to the Cloudflare API, automatically adding the required TXT record to your DNS zone.
+4. **Verification:** Let's Encrypt verifies the TXT record's presence publicly, approves ownership, and issues a valid, trusted SSL certificate.
+5. **Cleanup:** Cert-Manager cleans up by deleting the temporary TXT record via Cloudflare API, and saves the TLS certificate as a Kubernetes Secret (`website-tls`). NGINX Ingress automatically consumes this secret to secure traffic.
+
+### 4. Firewall-free Edge Routing: Cloudflare Tunnel
+Traditionally, to expose a local web app to the public, you would have to open ports on your home router and set up dynamic DNS, introducing substantial security risks. 
+
+**Cloudflare Tunnel** (`cloudflared`) establishes a secure, outbound-only connection. The `cloudflared` daemon deployed in our cluster initiates encrypted QUIC/TCP connections to Cloudflare's nearest edge servers using the secure token injected by Jenkins. Because this connection is outbound-only, your firewall allows it automatically, and you do not need to open any inbound ports.
+
+When a public user visits `k8.phaneesh.dev`, Cloudflare's network forwards the traffic down this active tunnel directly to your local cluster, which points internally to the Ingress-NGINX service: `http://ingress-nginx-controller.ingress-nginx.svc.cluster.local:80`.
+
+### The Complete End-to-End Traffic Path
+
+Here is how public internet requests securely resolve down to your workstation:
+
+```
+[ Public User ]
+       │
+       ▼ (HTTPS requests to k8.phaneesh.dev)
+[ Cloudflare Global Edge ]
+       │
+       ▼ (Traffic routed securely DOWN the active outbound tunnel)
+[ cloudflared Pod ] (Running inside KinD cluster)
+       │
+       ▼ (Forwards HTTP traffic locally)
+[ NGINX Ingress Controller ] (Secured with Let's Encrypt SSL from website-tls Secret)
+       │
+       ▼ (Decrypts and applies Ingress L7 host rules)
+[ website Service ] ──► [ website Pods ] (Renders static website assets)
+```
+
+* * *
 
 ## Code Snippets
 
