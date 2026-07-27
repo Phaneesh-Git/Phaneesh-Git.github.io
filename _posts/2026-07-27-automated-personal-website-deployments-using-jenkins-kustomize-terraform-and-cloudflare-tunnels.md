@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Automated Personal Website Deployments (phaneesh.dev) using Jenkins, Kustomize, Terraform, and Cloudflare Tunnels"
+title: "Automated personal website deployments (phaneesh.dev) using Jenkins and Kustomize, local KinD cluster via Terraform, configuring MetalLB, NGINX Ingress, Cert-Manager, and Cloudflare Tunnels for secure traffic routing and SSL"
 date: 2026-07-27
 categories: [Kubernetes, Terraform]
 tags: [Kubernetes, Terraform, Kind, Ingress, Jenkins, CI-CD, Cloudflare]
 image:
   path: /assets/headers/2026-07-27.jpg
-  alt: "Automated Personal Website Deployments (phaneesh.dev) using Jenkins, Kustomize, Terraform, and Cloudflare Tunnels"
+  alt: "Automated personal website deployments (phaneesh.dev) using Jenkins and Kustomize, local KinD cluster via Terraform, configuring MetalLB, NGINX Ingress, Cert-Manager, and Cloudflare Tunnels for secure traffic routing and SSL"
   width: 1200
   height: 630
   aspect ratio: 1.91:1
