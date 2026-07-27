@@ -1,0 +1,86 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#0f172a" />
+  
+  <!-- Subtle grid pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="1" />
+    </pattern>
+    <linearGradient id="title-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#grid)" />
+  
+  <!-- Decorative glowing circles -->
+  <circle cx="200" cy="150" r="100" fill="#38bdf8" opacity="0.05" filter="blur(40px)" />
+  <circle cx="1000" cy="450" r="150" fill="#818cf8" opacity="0.05" filter="blur(50px)" />
+  
+  <!-- Title & Subtitle -->
+  <text x="50%" y="130" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="44" font-weight="800" fill="url(#title-grad)" text-anchor="middle">
+    Automating Local Kubernetes Clusters
+  </text>
+  <text x="50%" y="185" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="24" font-weight="500" fill="#94a3b8" text-anchor="middle">
+    IaC &amp; Automated GitOps via Terraform, KinD, and NGINX Ingress
+  </text>
+
+  <!-- Flow Diagrams / Architecture boxes -->
+  <!-- Box 1: Jenkins CI/CD -->
+  <rect x="80" y="270" width="180" height="130" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="2" />
+  <text x="170" y="315" font-family="sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="middle">Jenkins Pipeline</text>
+  <text x="170" y="345" font-family="sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">SCM Polling &amp; Build</text>
+  <text x="170" y="365" font-family="sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Secrets Injection</text>
+
+  <!-- Arrow 1 -->
+  <path d="M 270 335 L 310 335" stroke="#475569" stroke-width="3" fill="none" />
+  <polygon points="310,330 320,335 310,340" fill="#475569" />
+
+  <!-- Box 2: Terraform Infrastructure -->
+  <rect x="330" y="270" width="180" height="130" rx="12" fill="#1e293b" stroke="#a855f7" stroke-width="2" />
+  <text x="420" y="315" font-family="sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="middle">Terraform (IaC)</text>
+  <text x="420" y="345" font-family="sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Provisions KinD</text>
+  <text x="420" y="365" font-family="sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">1 Control / 2 Workers</text>
+
+  <!-- Arrow 2 -->
+  <path d="M 520 335 L 560 335" stroke="#475569" stroke-width="3" fill="none" />
+  <polygon points="560,330 570,335 560,340" fill="#475569" />
+
+  <!-- Box 3: Kubernetes Bootstrap & App -->
+  <rect x="580" y="240" width="280" height="190" rx="16" fill="#0f172a" stroke="#3b82f6" stroke-width="3" />
+  <rect x="595" y="255" width="250" height="35" rx="8" fill="#1e293b" />
+  <text x="720" y="278" font-family="sans-serif" font-size="15" font-weight="700" fill="#3b82f6" text-anchor="middle">KinD Cluster (K8s)</text>
+  
+  <!-- Ingress-NGINX badge -->
+  <rect x="595" y="305" width="115" height="45" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1.5" />
+  <text x="652" y="332" font-family="sans-serif" font-size="12" font-weight="600" fill="#10b981" text-anchor="middle">Ingress-NGINX</text>
+
+  <!-- MetalLB badge -->
+  <rect x="730" y="305" width="115" height="45" rx="6" fill="#1e293b" stroke="#06b6d4" stroke-width="1.5" />
+  <text x="787" y="332" font-family="sans-serif" font-size="12" font-weight="600" fill="#06b6d4" text-anchor="middle">MetalLB</text>
+
+  <!-- Cert-Manager badge -->
+  <rect x="595" y="365" width="115" height="45" rx="6" fill="#1e293b" stroke="#ec4899" stroke-width="1.5" />
+  <text x="652" y="392" font-family="sans-serif" font-size="12" font-weight="600" fill="#ec4899" text-anchor="middle">Cert-Manager</text>
+
+  <!-- Web App badge -->
+  <rect x="730" y="365" width="115" height="45" rx="6" fill="#3b82f6" stroke="#3b82f6" stroke-width="1.5" />
+  <text x="787" y="392" font-family="sans-serif" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">Web Static App</text>
+
+  <!-- Arrow 3 -->
+  <path d="M 870 335 L 910 335" stroke="#475569" stroke-width="3" fill="none" />
+  <polygon points="910,330 920,335 910,340" fill="#475569" />
+
+  <!-- Box 4: Cloudflare Tunnel -->
+  <rect x="930" y="270" width="190" height="130" rx="12" fill="#1e293b" stroke="#f97316" stroke-width="2" />
+  <text x="1025" y="315" font-family="sans-serif" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="middle">Cloudflare Tunnel</text>
+  <text x="1025" y="345" font-family="sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">k8.phaneesh.dev</text>
+  <text x="1025" y="365" font-family="sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Secure Edge Routing</text>
+
+  <!-- Footer branding -->
+  <rect x="480" y="525" width="240" height="40" rx="20" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="600" y="550" font-family="'Courier New', Courier, monospace" font-size="14" font-weight="bold" fill="#38bdf8" text-anchor="middle">
+    Author: Phaneesh | 2026
+  </text>
+</svg>
