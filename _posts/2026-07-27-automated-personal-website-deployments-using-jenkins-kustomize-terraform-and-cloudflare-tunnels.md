@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Automating Local Kubernetes Clusters with Terraform, Kind, and NGINX Ingress"
+title: "Automated Personal Website Deployments (phaneesh.dev) using Jenkins, Kustomize, Terraform, and Cloudflare Tunnels"
 date: 2026-07-27
 categories: [Kubernetes, Terraform]
 tags: [Kubernetes, Terraform, Kind, Ingress, Jenkins, CI-CD, Cloudflare]
 image:
   path: /assets/headers/2026-07-27.jpg
-  alt: "Automating Local Kubernetes Clusters with Terraform, Kind, and NGINX Ingress"
+  alt: "Automated Personal Website Deployments (phaneesh.dev) using Jenkins, Kustomize, Terraform, and Cloudflare Tunnels"
   width: 1200
   height: 630
   aspect ratio: 1.91:1
