@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Automated personal website deployments (phaneesh.dev) using Jenkins and Kustomize, local KinD cluster via Terraform, configuring MetalLB, NGINX Ingress, Cert-Manager, and Cloudflare Tunnels for secure traffic routing and SSL"
+title: "Self-Hosting personal website with Jenkins, Terraform, and Kustomize"
 date: 2026-07-27
 categories: [Kubernetes, Terraform]
 tags: [Kubernetes, Terraform, Kind, Ingress, Jenkins, CI-CD, Cloudflare]
 image:
   path: /assets/headers/2026-07-27.jpg
-  alt: "Automated personal website deployments (phaneesh.dev) using Jenkins and Kustomize, local KinD cluster via Terraform, configuring MetalLB, NGINX Ingress, Cert-Manager, and Cloudflare Tunnels for secure traffic routing and SSL"
+  alt: "Self-Hosting personal website with Jenkins, Terraform, and Kustomize"
   width: 1200
   height: 630
   aspect ratio: 1.91:1
@@ -50,7 +50,7 @@ The local cluster's architecture mimics a professional enterprise environment. T
                                  │
                                  ├─► [ Ingress-NGINX ] (Routes layer 7 HTTP traffic)
                                  │
-                                 ├─► [ Cert-Manager ] (Requests TLS via Cloudflare DNS-01)
+                                 ├─► [ Cert-Manager ] (Requests TLS via Cloudflare DNS01)
                                  │
                                  └─► [ Cloudflared ] (Establishes secure tunnel to Edge)
 ```
